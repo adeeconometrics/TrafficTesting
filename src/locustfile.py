@@ -10,6 +10,7 @@ def make_email(first_name:str, last_name:str, company:str = "jbdc", extension:st
     return f"{first_name.lower()}.{last_name.lower()}@{company}.{extension}"
 class UserBehavior(HttpUser):
     wait_time = between(1, 2.5)
+    orders = []
 
     @task(1)
     def create_user(self):
@@ -38,6 +39,39 @@ class UserBehavior(HttpUser):
         })
 
     @task(3)
+    def add_order(self) -> None:
+        """Send a POST request to the /add_order endpoint."""
+        user_id = str(uuid4())
+        product_id = str(uuid4())
+        quantity = random.randint(1, 5)
+        total_price = round(random.uniform(5.0, 500.0), 2)
+        order_date = fake.date_this_year().isoformat()
+        shipping_address = fake.address()
+        payment_method = fake.credit_card_provider()
+        payment_status = "Completed"
+        self.orders.append({
+            "user_id": user_id,
+            "product_id": product_id,
+            "quantity": quantity,
+            "total_price": total_price,
+            "order_date": order_date,
+            "shipping_address": shipping_address,
+            "payment_method": payment_method,
+            "payment_status": payment_status
+        })
+        self.client.post("/add_order", json={
+            "order_id": str(uuid4()),
+            "user_id": user_id,
+            "product_id": product_id,
+            "quantity": quantity,
+            "total_price": total_price,
+            "order_date": order_date,
+            "shipping_address": shipping_address,
+            "payment_method": payment_method,
+            "payment_status": payment_status
+        })
+
+    @task(4)
     def update_order(self):
         """Send a PUT request to the /update_order endpoint."""
         self.client.put("/update_order/1", json={
@@ -49,22 +83,22 @@ class UserBehavior(HttpUser):
             "payment_status": "Paid"
         })
 
-    @task(4)
+    @task(5)
     def get_order_status(self):
         """Send a GET request to the /order_status endpoint."""
         self.client.get("/order_status/1")
     
-    @task(5)
+    @task(6)
     def get_products(self):
         """Send a GET request to the /products endpoint."""
         self.client.get("/products")
 
-    @task(6)
+    @task(7)
     def get_users(self):
         """Send a GET request to the /users endpoint."""
         self.client.get("/users")
     
-    @task(7)
+    @task(8)
     def get_orders(self):
         """Send a GET request to the /orders endpoint."""
         self.client.get("/orders")

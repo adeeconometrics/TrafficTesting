@@ -97,5 +97,15 @@ def update_order(order_id: str) -> Dict[str, Any]:
         conn.commit()
     return jsonify({"status": "success", "message": "Order updated successfully"}), 200
 
+@app.route('/add_order', methods=['POST'])
+def add_order() -> Dict[str, Any]:
+    data = request.get_json()
+    with connect("database.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO orders (order_id, user_id, product_id, quantity, total_price, order_date, shipping_address, payment_method, payment_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                       (data["order_id"], data["user_id"], data["product_id"], data["quantity"], data["total_price"], data["order_date"], data["shipping_address"], data["payment_method"], data["payment_status"]))
+        conn.commit()
+    return jsonify({"status": "success", "message": "Order added successfully"}), 201
+
 if __name__ == "__main__":
     app.run(debug=True)
