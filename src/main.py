@@ -47,6 +47,23 @@ def get_products() -> Dict[str, Any]:
 
     return jsonify({"status": "success", "products": products}), 200
 
+@app.route('/users', methods=['GET'])
+def get_users() -> Dict[str, Any]:
+    with connect("database.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users")
+        users = cursor.fetchall()
+
+    return jsonify({"status": "success", "users": users}), 200
+
+@app.route('/orders', methods=['GET'])
+def get_orders() -> Dict[str, Any]:
+    with connect("database.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM orders")
+        orders = cursor.fetchall()
+
+    return jsonify({"status": "success", "orders": orders}), 200
 
 @app.route('/create_user', methods=['POST'])
 def create_user() -> Dict[str, Any]:

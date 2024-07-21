@@ -48,3 +48,23 @@ class UserBehavior(HttpUser):
             "payment_method": "Credit Card",
             "payment_status": "Paid"
         })
+
+    @task(4)
+    def get_order_status(self):
+        """Send a GET request to the /order_status endpoint."""
+        self.client.get("/order_status/1")
+    
+    @task(5)
+    def get_products(self):
+        """Send a GET request to the /products endpoint."""
+        self.client.get("/products")
+
+    @task(6)
+    def get_users(self):
+        """Send a GET request to the /users endpoint."""
+        self.client.get("/users")
+    
+    @task(7)
+    def get_orders(self):
+        """Send a GET request to the /orders endpoint."""
+        self.client.get("/orders")
