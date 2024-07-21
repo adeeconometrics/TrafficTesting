@@ -1,29 +1,40 @@
 from locust import HttpUser, task, between
+from faker import Faker
+from uuid import uuid4
+import random
 
+fake = Faker()
+
+def make_email(first_name:str, last_name:str, company:str = "jbdc", extension:str = 'org') -> str:
+    """Generate an email address from the first name and last name."""
+    return f"{first_name.lower()}.{last_name.lower()}@{company}.{extension}"
 class UserBehavior(HttpUser):
     wait_time = between(1, 2.5)
 
     @task(1)
     def create_user(self):
         """Send a POST request to the /create_user endpoint."""
+        first_name = fake.first_name()
+        last_name = fake.last_name()
+        email = make_email(first_name, last_name)
         self.client.post("/create_user", json={
-            "user_id": "1",
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "john@example.com",
-            "password": "password",
-            "date_of_birth": "2000-01-01"
+            "user_id": str(uuid4()),
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email,
+            "password": fake.password(),
+            "date_of_birth": fake.date_of_birth().isoformat()
         })
 
     @task(2)
     def add_product(self):
         """Send a POST request to the /add_product endpoint."""
         self.client.post("/add_product", json={
-            "product_id": "1",
-            "name": "Product 1",
-            "category": "Category 1",
-            "price": 100.0,
-            "stock": 10
+            "product_id": str(uuid4()),
+            "name": fake.word(),
+            "category": fake.word(),
+            "price": round(random.uniform(5.0, 100.0), 2),
+            "stock": random.randint(0, 100)
         })
 
     @task(3)

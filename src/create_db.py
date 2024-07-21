@@ -40,5 +40,15 @@ def create_database():
                           )''')
         conn.commit()
 
+def clear_db():
+    """Clear all data from the database"""
+    with connect("database.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM users")
+        cursor.execute("DELETE FROM products")
+        cursor.execute("DELETE FROM orders")
+        conn.commit()
+
 if __name__ == "__main__":
-    create_database()
+    # create_database()
+    clear_db()
