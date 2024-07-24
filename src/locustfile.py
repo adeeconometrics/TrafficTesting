@@ -11,6 +11,8 @@ def make_email(first_name:str, last_name:str, company:str = "jbdc", extension:st
 class UserBehavior(HttpUser):
     wait_time = between(1, 2.5)
     orders = []
+    order_ids = []
+    order_id:str = ''
 
     @task(1)
     def create_user(self):
@@ -86,7 +88,7 @@ class UserBehavior(HttpUser):
     @task(5)
     def get_order_status(self):
         """Send a GET request to the /order_status endpoint."""
-        self.client.get("/order_status/1")
+        self.client.get(f"/order_status/{self.order_id}")
     
     @task(6)
     def get_products(self):

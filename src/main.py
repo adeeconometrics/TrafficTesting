@@ -14,6 +14,7 @@ def login() -> Dict[str, Any]:
     password = data.get('password')
 
     with connect("database.db") as conn:
+        conn.execute('PRAGMA journal_mode=WAL;')
         cursor = conn.cursor()
         cursor.execute(
             "SELECT * FROM users WHERE email = ? AND password = ?", (email, password))
@@ -28,6 +29,7 @@ def login() -> Dict[str, Any]:
 @app.route('/order_status/<order_id>', methods=['GET'])
 def get_order_status(order_id) -> Dict[str, Any]:
     with connect("database.db") as conn:
+        conn.execute('PRAGMA journal_mode=WAL;')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM orders WHERE order_id = ?", (order_id,))
         order = cursor.fetchone()
@@ -52,6 +54,7 @@ def get_order_status(order_id) -> Dict[str, Any]:
 @app.route('/products', methods=['GET'])
 def get_products() -> Dict[str, Any]:
     with connect("database.db") as conn:
+        conn.execute('PRAGMA journal_mode=WAL;')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM products")
         products = cursor.fetchall()
@@ -61,6 +64,7 @@ def get_products() -> Dict[str, Any]:
 @app.route('/users', methods=['GET'])
 def get_users() -> Dict[str, Any]:
     with connect("database.db") as conn:
+        conn.execute('PRAGMA journal_mode=WAL;')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users")
         users = cursor.fetchall()
@@ -70,6 +74,7 @@ def get_users() -> Dict[str, Any]:
 @app.route('/orders', methods=['GET'])
 def get_orders() -> Dict[str, Any]:
     with connect("database.db") as conn:
+        conn.execute('PRAGMA journal_mode=WAL;')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM orders")
         orders = cursor.fetchall()
@@ -80,6 +85,7 @@ def get_orders() -> Dict[str, Any]:
 def create_user() -> Dict[str, Any]:
     data = request.get_json()
     with connect("database.db") as conn:
+        conn.execute('PRAGMA journal_mode=WAL;')
         cursor = conn.cursor()
         cursor.execute("INSERT INTO users (user_id, first_name, last_name, email, password, date_of_birth) VALUES (?, ?, ?, ?, ?, ?)",
                        (data["user_id"], data["first_name"], data["last_name"], data["email"], data["password"], data["date_of_birth"]))
@@ -91,6 +97,7 @@ def create_user() -> Dict[str, Any]:
 def add_product() -> Dict[str, Any]:
     data = request.get_json()
     with connect("database.db") as conn:
+        conn.execute('PRAGMA journal_mode=WAL;')
         cursor = conn.cursor()
         cursor.execute("INSERT INTO products (product_id, name, category, price, stock) VALUES (?, ?, ?, ?, ?)",
                        (data["product_id"], data["name"], data["category"], data["price"], data["stock"]))
@@ -102,6 +109,7 @@ def add_product() -> Dict[str, Any]:
 def update_order(order_id: str) -> Dict[str, Any]:
     data = request.get_json()
     with connect("database.db") as conn:
+        conn.execute('PRAGMA journal_mode=WAL;')
         cursor = conn.cursor()
         cursor.execute("UPDATE orders SET quantity = ?, total_price = ?, order_date = ?, shipping_address = ?, payment_method = ?, payment_status = ? WHERE order_id = ?",
                        (data["quantity"], data["total_price"], data["order_date"], data["shipping_address"], data["payment_method"], data["payment_status"], order_id))
@@ -112,6 +120,7 @@ def update_order(order_id: str) -> Dict[str, Any]:
 def add_order() -> Dict[str, Any]:
     data = request.get_json()
     with connect("database.db") as conn:
+        conn.execute('PRAGMA journal_mode=WAL;')
         cursor = conn.cursor()
         cursor.execute("INSERT INTO orders (order_id, user_id, product_id, quantity, total_price, order_date, shipping_address, payment_method, payment_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                        (data["order_id"], data["user_id"], data["product_id"], data["quantity"], data["total_price"], data["order_date"], data["shipping_address"], data["payment_method"], data["payment_status"]))
