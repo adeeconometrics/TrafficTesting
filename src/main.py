@@ -35,18 +35,7 @@ def get_order_status(order_id) -> Dict[str, Any]:
         order = cursor.fetchone()
 
     if order:
-        order_dict = {
-            "order_id": order[0],
-            "user_id": order[1],
-            "product_id": order[2],
-            "quantity": order[3],
-            "total_price": order[4],
-            "order_date": order[5],
-            "shipping_address": order[6],
-            "payment_method": order[7],
-            "payment_status": order[8]
-        }
-        return jsonify({"status": "success"}, order_dict), 200
+        return jsonify({"status": "success", "order": order}), 200
     else:
         return jsonify({"status": "failure", "message": "Order not found"}), 404
 
