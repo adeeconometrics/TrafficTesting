@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 
-public class MyDbContext : DbContext
-{
-    public DbSet<Item> Items { get; set; }
+namespace TodoApi.Models;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite("Data Source=TestAPI.db");
+public class TodoDbContext : DbContext
+{
+    public TodoDbContext(DbContextOptions<TodoDbContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<TodoItem> TodoItems { get; set; } = null!;
 }
