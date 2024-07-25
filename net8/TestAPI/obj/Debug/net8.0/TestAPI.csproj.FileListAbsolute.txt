@@ -1,8 +1,0 @@
-/Users/ddamiana/Documents/CodeProjects/TrafficTesting/net8/TestAPI/obj/Debug/net8.0/TestAPI.csproj.AssemblyReference.cache
-/Users/ddamiana/Documents/CodeProjects/TrafficTesting/net8/TestAPI/obj/Debug/net8.0/TestAPI.GeneratedMSBuildEditorConfig.editorconfig
-/Users/ddamiana/Documents/CodeProjects/TrafficTesting/net8/TestAPI/obj/Debug/net8.0/TestAPI.AssemblyInfoInputs.cache
-/Users/ddamiana/Documents/CodeProjects/TrafficTesting/net8/TestAPI/obj/Debug/net8.0/TestAPI.AssemblyInfo.cs
-/Users/ddamiana/Documents/CodeProjects/TrafficTesting/net8/TestAPI/obj/Debug/net8.0/TestAPI.csproj.CoreCompileInputs.cache
-/Users/ddamiana/Documents/CodeProjects/TrafficTesting/net8/TestAPI/obj/Debug/net8.0/TestAPI.MvcApplicationPartsAssemblyInfo.cs
-/Users/ddamiana/Documents/CodeProjects/TrafficTesting/net8/TestAPI/obj/Debug/net8.0/TestAPI.MvcApplicationPartsAssemblyInfo.cache
-/Users/ddamiana/Documents/CodeProjects/TrafficTesting/net8/TestAPI/obj/Debug/net8.0/TestAPI.sourcelink.json
