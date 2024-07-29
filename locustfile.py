@@ -1,11 +1,19 @@
 from faker import Faker
 from locust import HttpUser, task, between
+
+from typing import Deque
 from random import randint
+from collections import deque
+
 
 fake = Faker()
 
 class UserBehaviorAsp(HttpUser):
     wait_time = between(1, 2.5)
+    
+    product_ids: Deque = deque(maxlen=5)
+    user_ids: Deque = deque(maxlen=5)
+    order_ids: Deque = deque(maxlen=5)
 
     @task(1)
     def get_order(self) -> None:
