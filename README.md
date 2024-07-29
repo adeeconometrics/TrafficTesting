@@ -43,3 +43,7 @@ Cleaning the build executable
 $ dotnet clean
 ```
 
+--- 
+
+Known Issues:
+- Load testing API Endpoint with IDs for `HTTPGet` and `HTTPPut` method is not working. 
