@@ -35,18 +35,17 @@ class TaskSequenceAsp(SequentialTaskSet):
 
     @task
     def get_product_id(self) -> None:
-        if len(self.product_ids) > 0:
+        if len(self.product_ids) != 0:
             self.client.get(f"api/Product/{choice(self.product_ids)}")
     
     @task
     def put_product_id(self) -> None:
-        if len(self.product_ids) > 0:
-            chosen_product_id:str = choice(self.product_ids)
-            self.client.put(f"api/Product/{chosen_product_id}", json={
-                'productId': chosen_product_id,
-                'name': fake.name(),
-                'category': fake.word(),
-            })
+        chosen_product_id:str = choice(self.product_ids)
+        self.client.put(f"api/Product/{chosen_product_id}", json={
+            'productId': chosen_product_id,
+            'name': fake.name(),
+            'category': fake.word(),
+        })
 
     @task
     def post_user(self) -> None:
