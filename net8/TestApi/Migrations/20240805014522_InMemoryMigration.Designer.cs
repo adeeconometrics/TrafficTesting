@@ -10,8 +10,8 @@ using TestApi.Models;
 namespace TestApi.Migrations
 {
     [DbContext(typeof(PosDbContext))]
-    [Migration("20240729025223_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240805014522_InMemoryMigration")]
+    partial class InMemoryMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
